@@ -9,15 +9,23 @@ def reverse_k_group(head, k):
     prev = None
     next_node = None
 
-    while current and count < k:
-        next_node = current.next
-        current.next = prev
-        prev = current
-        current = next_node
+    temp = current
+    while temp and count < k:
+        temp = temp.next
         count += 1
 
-    if next_node:
-        head.next = reverse_k_group(next_node, k)
+    if count == k:
+        while current and count > 0:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+            count -= 1
+
+        if next_node is not None:
+            head.next = reverse_k_group(next_node, k)
+    else:
+        return head
     return prev
 
 def print_linked_list(head):
@@ -27,13 +35,14 @@ def print_linked_list(head):
         current = current.next
     print("None")
 
-lt = [1, 2, 3, 4, 5, 6]
+lt = [1, 2, 3, 4, 5]
 k = 3
 dummy = Node(0)
 current = dummy
 for num in lt:
     current.next = Node(num)
     current = current.next
+
 print("Original List:")
 print_linked_list(dummy.next)
 
