@@ -3,54 +3,40 @@ class Node:
         self.data = data
         self.next = None
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
+def reverse_k_group(head, k):
+    current = head
+    count = 0
+    prev = None
+    next_node = None
 
-    def append(self, data):
-        new_node = Node(data)
-        if not self.head:
-            self.head = new_node
-        else:
-            current = self.head
-            while current.next:
-                current = current.next
-            current.next = new_node
+    while current and count < k:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+        count += 1
 
-    def reverse_k_group(self, head, k):
-        current = head
-        count = 0
+    if next_node:
+        head.next = reverse_k_group(next_node, k)
+    return prev
 
-        while current and count < k:
-            current = current.next
-            count += 1
+def print_linked_list(head):
+    current = head
+    while current:
+        print(current.data, end=" -> ")
+        current = current.next
+    print("None")
 
-        if count == k:
-            current = self.reverse_k_group(current, k)
-            while count > 0:
-                temp = head.next
-                head.next = current
-                current = head
-                head = temp
-                count -= 1
-            head = current
-        return head
+lt = [1, 2, 3, 4, 5, 6]
+k = 3
+dummy = Node(0)
+current = dummy
+for num in lt:
+    current.next = Node(num)
+    current = current.next
+print("Original List:")
+print_linked_list(dummy.next)
 
-    def traverse(self):
-        current = self.head
-        while current:
-            print(current.data, end=" -> ")
-            current = current.next
-        print("None")
-
-linked_list = LinkedList()
-numbers = [1, 2, 3, 4, 5]
-for number in numbers:
-    linked_list.append(number)
-print("Original Linked List:")
-linked_list.traverse()
-
-kth = 2
-linked_list.head = linked_list.reverse_k_group(linked_list.head, kth)
-print(f"\nReversed Linked List in groups of {kth}:")
-linked_list.traverse()
+result = reverse_k_group(dummy.next, k)
+print(f"Reversed List in groups of {k}:")
+print_linked_list(result)
