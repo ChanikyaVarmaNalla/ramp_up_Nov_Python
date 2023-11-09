@@ -44,13 +44,13 @@ class LinkedList:
         print("None")
 
 linked_list = LinkedList()
-numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+numbers = [1, 2, 3, 4, 5]
 for number in numbers:
     linked_list.append(number)
 print("Original Linked List:")
 linked_list.traverse()
 
-kth = 3
+kth = 2
 linked_list.head = linked_list.reverse_k_group(linked_list.head, kth)
 print(f"\nReversed Linked List in groups of {kth}:")
 linked_list.traverse()

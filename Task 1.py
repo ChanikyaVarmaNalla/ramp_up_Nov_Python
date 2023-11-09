@@ -10,7 +10,6 @@ def max_profit_stock(prices):
             if prices[i - 1] - min_price > max_profit:
                 max_profit = prices[i - 1] - min_price
                 result.append((buy_day + 1, sell_day + 1, max_profit))
-
             min_price = prices[i]
             buy_day = i
         sell_day = i
